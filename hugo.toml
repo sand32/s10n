@@ -1,0 +1,97 @@
+baseURL = "https://example.org/"
+languageCode = "en-us"
+title = "Seth Anderson"
+theme = "LoveIt"
+
+languageName = "English"
+
+[menu]
+  [[menu.main]]
+    weight = 1
+    identifier = "xp"
+    pre = ""
+    post = ""
+    name = "Experience"
+    url = "/xp/"
+    title = ""
+  [[menu.main]]
+    weight = 2
+    identifier = "posts"
+    pre = ""
+    post = ""
+    name = "Posts"
+    url = "/posts/"
+    title = ""
+
+[params]
+  defaultTheme = "auto"
+  title = "Seth Anderson"
+  description = "Hi!"
+  [params.author]
+    name = "Seth Anderson"
+    email = "seth.anderson32@gmail.com"
+  [params.social]
+    Github = "sand32"
+    LinkedIn = "sanders3"
+    Mastodon = "https://mastodon.social/@sand32"
+    # Email = "seth.anderson32@gmail.com"
+    # RSS = true
+  [params.header]
+    desktopMode = "fixed"
+    mobileMode = "auto"
+    [params.header.title]
+      name = "Seth Anderson"
+      typeit = false
+  [params.footer]
+    enable = true
+    custom = ""
+    hugo = true
+    copyright = true
+    author = true
+    since = 2025
+    icp = ""
+    license = ""
+  [params.list]
+    paginate = 20
+    dateFormat = "01-02"
+    rss = 10
+  [params.app]
+    title = "Seth Anderson"
+    noFavicon = true
+    svgFavicon = ""
+    themeColor = "#ffffff"
+    iconColor = "#000000"
+    tileColor = "#000000"
+  [params.search]
+    enable = false
+  [params.home]
+    rss = 10
+    [params.home.profile]
+      enable = true
+      gravatarEmail = "seth.anderson32@gmail.com"
+      avatarURL = ""
+      title = ""
+      subtitle = "Hi!"
+      typeit = false
+      social = true
+      disclaimer = ""
+    [params.home.posts]
+      enable = false
+      paginate = 6
+      defaultHiddenFromHomePage = true
+  [params.page]
+    [params.page.toc]
+      enable = true
+      auto = false
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
