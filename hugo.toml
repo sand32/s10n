@@ -16,6 +16,14 @@ languageName = "English"
     title = ""
   [[menu.main]]
     weight = 2
+    identifier = "projects"
+    pre = ""
+    post = ""
+    name = "Projects"
+    url = "/proj/"
+    title = ""
+  [[menu.main]]
+    weight = 3
     identifier = "posts"
     pre = ""
     post = ""
