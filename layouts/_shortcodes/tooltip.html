@@ -1,0 +1,8 @@
+{{- with .Get "text" -}}
+    <span class="tooltip">
+        {{- $.Inner | safeHTML -}}
+        <span class="tooltiptext">{{ . }}</span>
+    </span>
+{{- else -}}
+    {{- errorf "The %q shortcode requires a 'text' argument: see %s" $.Name $.Position -}}
+{{- end -}}

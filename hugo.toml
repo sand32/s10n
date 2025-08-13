@@ -91,6 +91,8 @@ languageName = "English"
     [params.page.toc]
       enable = true
       auto = false
+    [params.page.library.css]
+      tooltip = "css/tooltip.css"
 
 [markup]
   [markup.highlight]
