@@ -1,0 +1,10 @@
+{
+    "name": "Seth Anderson",
+    "image": "images/profile.jpg",
+    "bio": "",
+    "social": [
+        { "github": "https://github.com/sand32" },
+        { "linkedin": "https://linkedin.com/in/sanders3" },
+        { "mastodon": "https://mastodon.social/@sand32" }
+    ]
+}
