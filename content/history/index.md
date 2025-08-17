@@ -32,8 +32,7 @@ consumers and businesses. These backing services are global and handle extremely
 At SmartThings, I built, supported, and improved a number of microservices in a highly available cloud environment.
 - Brought myself up to speed on a completely foreign stack (Java, Groovy, Ratpack, Gradle, Grails, etc.) while also relearning how to computer (first time using a Mac) and diving into a very complex ecosystem with many different components: modern, legacy, and external
 - Worked to transition central platform logic from a legacy monolith to microservices
-- Deployed services t
-layout = 'simple'o AWS using Terraform and managed those deployments via Spinnaker
+- Deployed services to AWS using Terraform and managed those deployments via Spinnaker
 - Participated in team triage, tracking down issues presented with information far removed from our team’s problem domain and either fixing them or passing them along to the relevant team
 - Implemented diagnostics utilizing SumoLogic for log aggregation and DataDog for metrics, alerting, and dashboarding
 - Participated in the on-call rotation for our team: diagnosing and counteracting live production issues in real-time
