@@ -8,6 +8,8 @@ tags: ['Game Development', 'Projects', 'Unity', 'C#']
 
 {{< lead >}}[{{< icon "globe" >}}](https://embersadrift.com) [{{< icon "steam" >}}](https://store.steampowered.com/app/3336530/Embers_Adrift/){{< /lead >}}
 
+_Note: This article is currently being written and will expand and/or change substantially over the coming days._
+
 ### Brief History
 I joined the Stormhaven team in May 2020. This is a project that had started as a passion project by a small group of Everquest fans, had already gone through several personnel shifts through its history, and by the time I joined the project had made some significant progress and had received the funding required to expand the team.
 
@@ -22,13 +24,12 @@ Due to this visibility, we were provided with much, often quite vocal, feedback 
 Among myself and our CTO, our working relationship naturally fell into a feature-ownership paradigm. While there's always times when work overlaps, and we continually consult each other to ensure alignment, we generally pass tasks between us based on who is most familiar with a given system. For the remainder of this article, I'll be diving into the features I was chiefly responsible for. As such, you can safely assume that I performed the vast majority of programming involved in each system, including: back-end, UI, network communication, and tooling.
 
 ### Social Features
+#### Back-End
 When I joined the project, there were only rudimentary social features implemented. The game had an external Python service that handled chat and rudimentary group management. I was tasked with fleshing this out and given my past experience with back-end service development in C#, we decided to build a new service from the ground up for our social features. Given the fact that we already had players engaging with the game, I was also directed to not disrupt the existing JSON-over-TCP protocol the project already had established.
-
-![A screenshot of the in-game social window. The window is divided in two, the left half dedicated to the Looking For Group tools, the right half dedicated to managine in-game relationships spread across multiple tabs.](/images/ea-social-window.png)
 
 What has followed is now a reliable social service handling server-side logic for the following:
 
-- Chat, with configurable channels, and supports channels for global communication, zone-based communication, group/guild/raid communication as well as world-position based communication (using an in-memory [KD-Tree](https://en.wikipedia.org/wiki/K-d_tree))
+- Chat, with configurable channels, and supports channels for global communication, zone-based communication, group/guild/raid communication as well as world-position based communication (using an in-memory [KD Tree](https://en.wikipedia.org/wiki/K-d_tree))
 - Groups, including leader management and seamless restoration in the event of service or connection failure
 - Guilds, including ranks, rank-based permissions, general and officer chat, {{< tooltip text="Guild Master: the top-most rank in any guild which holds absolute power over the structure of the guild." >}}GM{{< /tooltip >}} transfer, etc.
 - Raids (comprised of multiple normal groups)
@@ -37,9 +38,71 @@ What has followed is now a reliable social service handling server-side logic fo
 - Mail, including both the in-game postal service as well as invites for the aforementioned features
 - Cross-Zone player status, being the only non-zone-specific back-end we have, the social service also propagates player status changes including social status (Online/Away/Do Not Disturb), role/specialization, level, location, etc.
 
-![A screenshot of the in-game mailbox.](/images/ea-mailbox-window.png)
-
 This service maintains real-time connections with all in-game players over TCP and processes commands sent to it in an asynchronous fashion. It uses a MongoDB server for player data persistence which is shared with the zone servers. It makes heavy use of in-memory caching and pre-caches player data on startup to avoid hammering the database during mass-connection events. Due to the niche nature of our product, we decided to run only a single instance of this service at a time. If we ever need to restart the server while players are connected, the game client will continually try to reconnect them until the server comes back up, when they reconnect, the social service will already have restored all their data and player state from the database and they often won't have even noticed any service interruption. Naturally, such disruptions are extremely rare.
+
+One construct that emerged during the development of this service and has proven useful time and time again is the use of Broadcast Groups. Broadcast Groups are merely collections referencing in-memory player objects in lists meant to receive communication in bulk. Every in-game group has a Broadcast Group, every guild has three (one for the general roster, one for members that can chat, one for officers), every zone has one, etc. These groups, of course, are primarily used to send chat to players, but they also function as lookup groups for online players. The global Broadcast Group contains all currently online players and is used for global chat but also for general lookup of any online player in a variety of social logic. Likewise, the general guild Broadcast Group is used for looking up online guild members in certain cases as well. Overall, this is a simple concept that has proven to be a useful and reliable way of managing collections of players and forms a central utility that is used throughout the service.
+
+This service is structured in a quasi-standard way for a .NET application. Foundationally, it is an ASP.NET Core application, but the majority of its logic is driven via a [BackgroundService](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.hosting.backgroundservice) implementation which handles the TCP socket connections and delegates to command handlers:
+
+```csharp
+public interface ICommandHandler
+{
+    CommandClass CommandClass { get; }
+    Task Handle(WorldCommand command, IPlayer sender);
+}
+```
+
+These handlers handle basic validation and permission checking logic (which varies greatly for each individual command) and then calls an underlying service layer which handles the doing of the thing (i.e. business logic, if you want to be boring about it). This service layer will in turn either call other services in this layer or call to the provider layer to perform database interaction. In this way, it's not unlike a million other tiered application structures, but this design was not prescribed, simply emergent.
+
+The following is an example of the `guild.kick` command:
+
+{{< mermaid >}}
+sequenceDiagram
+    participant client as Game Client
+    box Social Service
+        participant handler as Guild Handler
+        participant service as Guild Service
+        participant provider as Guild Provider
+    end
+    client->>handler: Send guild.kick command
+    handler->>handler: Is sender in guild?
+    handler->>handler: Can sender kick people? (as cached)
+    handler->>handler: Are they kicking a valid player?
+    handler->>service: Read Guild and Guild Member records
+    service->>provider: Read
+    provider-->service: Result
+    service-->handler: Result
+    handler->>handler: Did we find their guild?
+    handler->>handler: Is the player they're kicking in this guild?
+    handler->>handler: Do they really truly have permissions to kick?
+    handler->>service: RemoveMember()
+    service->>provider: Remove member from guild in database
+    provider->>provider: Update in-memory guild cache
+    provider-->service: Success?
+    service->>service: Remove member from broadcast groups
+    service->>client: Notify relevant clients of the kick
+    service->>service: Log the event
+    service->>service: Update in-memory player state
+{{< /mermaid >}}
+
+The service makes heavy use of dependency injection, including multiple cases where it simply injects everything that implements a certain interface and iterates over them, calling each one (not very impressive, but I just think it's neat).
+
+Aside from the command handlers, another important ingestion mechanism is the player ping. This ping contains basic information like player position, level, role, etc. Depending on need, there are multiple classes in the service layer which implement `IPingHandler` and are all informed of every ping received such that they can update any internal state as necessary. This is primarily used for cross-zone player state propagation, but is also used to update our internal KD Tree (used for radius-based chat) amongst other things.
+
+```csharp
+public interface IPingHandler
+{
+    Task HandlePing(IPlayer player, Ping ping);
+}
+```
+
+While the service was built as an ASP.NET Core app in anticipation of also exposing HTTP endpoints, this has only been utilized very recently for some internal communication.
+
+#### Front-End
+
+![A screenshot of the in-game social window. The window is divided in two, the left half dedicated to the Looking For Group tools, the right half dedicated to managine in-game relationships spread across multiple tabs.](/images/ea-social-window.png)
+
+![A screenshot of the in-game mailbox.](/images/ea-mailbox-window.png)
 
 ![An animated gif of the in-game chat windowing system demonstrating how chat tabs can be dragged out into their own windows or recombined into a single window.](/images/ea-tab-dragging.gif)
 
