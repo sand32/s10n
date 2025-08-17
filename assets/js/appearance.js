@@ -27,8 +27,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const switcherMobile = document.getElementById("appearance-switcher-mobile");
 
   updateMeta();
-  saveOriginalMermaidData();
-  updateMermaid(getTargetAppearance());
+  if (typeof saveOriginalMermaidData === "function") saveOriginalMermaidData();
+  if (typeof updateMermaid === "function") updateMermaid(getTargetAppearance());
   this.updateLogo?.(getTargetAppearance());
 
   if (switcher) {
@@ -40,7 +40,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         targetAppearance
       );
       updateMeta();
-      updateMermaid(getTargetAppearance());
+      if (typeof updateMermaid === "function") updateMermaid(getTargetAppearance());
       this.updateLogo?.(targetAppearance);
     });
     switcher.addEventListener("contextmenu", (event) => {
@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         targetAppearance
       );
       updateMeta();
-      updateMermaid(getTargetAppearance());
+      if (typeof updateMermaid === "function") updateMermaid(getTargetAppearance());
       this.updateLogo?.(targetAppearance);
     });
     switcherMobile.addEventListener("contextmenu", (event) => {
