@@ -18,7 +18,7 @@ The project, then called Saga of Lucimia, had a solid technological foundation, 
 ### Always Shipping
 One unique aspect of this project was that we were developing in full view of a community of players. From before I started and through to release, we shipped changes to our players on a weekly basis. After launch, we adopted a monthly cadence with full and descriptive patch notes provided every month. This cadence has been kept through to today.
 
-Due to this visibility, we were provided with much, often quite vocal, feedback from players and this has helped us course correct along the way.
+Due to this visibility, we were provided with much, often quite vocal, feedback from players and this has helped us course-correct along the way.
 
 ### Top-to-Bottom Feature Work
 Among myself and our CTO, our working relationship naturally fell into a feature-ownership paradigm. While there's always times when work overlaps, and we continually consult each other to ensure alignment, we generally pass tasks between us based on who is most familiar with a given system. For the remainder of this article, I'll be diving into the features I was chiefly responsible for. As such, you can safely assume that I performed the vast majority of programming involved in each system, including: back-end, UI, network communication, and tooling.
@@ -69,7 +69,7 @@ sequenceDiagram
     handler->>handler: Can sender kick people? (as cached)
     handler->>handler: Are they kicking a valid player?
     handler->>service: Read Guild and Guild Member records
-    service->>provider: Read
+    service->>provider: Read (cache/DB)
     provider-->service: Result
     service-->handler: Result
     handler->>handler: Did we find their guild?
@@ -99,10 +99,26 @@ public interface IPingHandler
 While the service was built as an ASP.NET Core app in anticipation of also exposing HTTP endpoints, this has only been utilized very recently for some internal communication.
 
 #### Front-End
+The front-end for all our social features resides entirely within our Unity game client. I've build a number of UIs for this game including multiple in relation to our social features. In keeping with the codebase as built by our CTO, our social features are coordinated within our game client by a singleton class: the `SocialManager`. All UIs for our social features react to events exposed by this singleton and call back into it to realize user intent. In pattern-brain lingo, this would be called the view-model.
 
-![A screenshot of the in-game social window. The window is divided in two, the left half dedicated to the Looking For Group tools, the right half dedicated to managine in-game relationships spread across multiple tabs.](/images/ea-social-window.png)
+The primary UI that exposes social features is our Social Window, pictured below. This window is divided into two panes: the left pane focuses entirely on the {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}} feature. The right-hand pane contains relationship management features. This UI was an exercise in creating a very dense UI full of many interactive features. The design was driven by myself with input from other team members. It's not a pretty UI, but it's functional and our users manage to utilize it effectively.
 
-![A screenshot of the in-game mailbox.](/images/ea-mailbox-window.png)
+![A screenshot of the in-game social window as described above. The friends tab is selected and is showing a list of offline friends.](/images/ea-social-window.png)
+
+A relatively late feature, the postal system allows players to send messages to each other whether or not the recipient is online. These messages may also send money or items (postage increases based on the items sent). If sending items, the sender also has the option to demand cash on delivery, requiring the recipient to pay a fee before the items are released to them (this fee is sent via another message back to the sender). This postal system was later used to deliver items and cash for our auction house feature (in which I was not involved). Below is the message composition UI for said system.
+
+![A screenshot of the in-game mailbox. The window provides typical fields for entering mail message data: a recipient name, a subject line, and a message. This is followed by an attachments section into which players can drag items and with which they can set a monetary amount to either send or demand as Cash On Delivery. At the bottom is a postage cost, their available funds, and Clear and Send buttons.](/images/ea-mailbox-window.png)
+
+The chat windowing system has been an interesting challenge. In a game like ours, chat is a core feature with many ergonomic expectations our users bring to the table from other similar games. One aspect of the UI that has been interesting to tackle has been: based on any number of situations, which chat window/tab should be activated when the user hits the enter key? This has gone through multiple evolutions over the course of our project, but we've landed on the following steps (as of this writing, yet to be released):
+
+1. Use the most recently used chat tab, only if active (it's the selected tab)
+1. Use the first found active chat tab
+1. Use the most recently used chat tab, even if inactive
+1. Use the first found inactive chat tab
+1. Use the a new chat tab in the most recently active window
+1. Use the a new chat tab in the first found window
+
+The chat windows are probably the most configurable UI elements. Every player has their own desired configuration and number of windows that must be restored every session. Chat tabs can be dragged between windows, re-ordered in their current window, or dragged out to create a new window. If the last tab in a window is closed or dragged to another window, that window is closed (unless it's the last window). As you might imagine, this requires fairly particular saving of window state.
 
 ![An animated gif of the in-game chat windowing system demonstrating how chat tabs can be dragged out into their own windows or recombined into a single window.](/images/ea-tab-dragging.gif)
 
