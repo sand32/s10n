@@ -2,7 +2,7 @@
 date: 2022-10-15
 title: 'Embers Adrift'
 description: 'An indie MMO made in Unity, released in 2022'
-tags: ['Game Development', 'Projects', 'Unity', 'C#']
+tags: ['Game Development', 'Full-Time', 'Project', 'Unity', 'C#']
 ---
 <!-- <iframe src="https://store.steampowered.com/widget/3336530/" frameborder="0" width="646" height="190"></iframe> -->
 
@@ -123,9 +123,32 @@ The chat windows are probably the most configurable UI elements. Every player ha
 ![An animated gif of the in-game chat windowing system demonstrating how chat tabs can be dragged out into their own windows or recombined into a single window.](/images/ea-tab-dragging.gif)
 
 ### Crafting System
-Implemented and maintained our crafting system, a relatively complex solution allowing flexible use of materials per recipe and allowing those materials to ultimately affect the end stats of an item that may be several crafting steps removed. I worked extensively with one of our designers to add features and capabilities throughout development.
+Our crafting system is perhaps a bit overly complex. I was handed a design from early on in the project. It was very ambitious, ultimately a bit too ambitious for the amount of design implementation we were capable of taking on. Nevertheless, the system I built carries out that design intent and over time we've been able to utilize some aspects of the system.
+
+#### Flexible Recipes
+Every recipe in this system requires the fulfillment of one or more components. Each component can be fulfilled by one or more possible materials. For example, a sword recipe might have blade and hilt components. The blade component might allow one of any number of possible metals. The chosen material usually affects the stats of the resulting item in some way a designer defines via our tooling. After we implemented this, I noticed that World of Warcraft brought in a similar feature, so we must've been on to something with this.
 
 ![A screenshot of the in-game crafting window used in this system. Left side is a recipe list with a \"Light Cooked Meat\" recipe selected, right side shows a detail pane containing the name and level of the recipe, a components selection area, an item preview, and buttons to activate the crafting process.](/images/ea-crafting-window.png)
+
+#### Multi-Step Crafting
+While we only make limited use of this, one of the original pillars of the system was that if a crafted item is used in a later recipe to create yet another item, the original item's materials can affect the end item's stats. Essentially, any materials used in the entire history of an item's crafting history can affect its current states. To do this, every item instance carries a tree of IDs to track its crafting history such that we can reconstruct the item when it enters gameplay scope.
+
+#### Data and Tooling
+The item system was originally designed with the notion that items would have fixed definitions (which we term `Archetypes`). With a crafting system where each item can have an enormous number of permutations based on its own bespoke history, there was no way we could define the plurality of `Archetypes` necessary to account for every minute difference. As such, I came up with the concept of a `DynamicArchetype`.
+
+When an item enters gameplay scope, a `DynamicArchetype` is fetched from a pool and copies the stats of the original item, then applies any one of a number of `ComponentEffects` as defined by its designer. These `ComponentEffects` have conditions and actions defined such that they only take effect when the item history contains certain characteristics and, if suitable, they apply any number of actions which alter the item's stats. When the item leaves gameplay scope, the `DynamicArchetype` is returned to the pool. This is true on both the current zone server and the client, though the scopes differ.
+
+Even this would be a bit too much design work for a game of this genre. To mitigate this, we have `ComponentEffectProfiles` which are collections of component effects that can be applied to items. These can also refer to other `ComponentEffectProfiles` such that the designer can build a composable collection of effects for like items.
+
+Between the recipes, the items, and the `ComponentEffects`, there are a ridiculous multitude of options available to the designer. This plethora of options has only expanded over time as the designer primarily responsible for our game's item progression has discovered new ways to flex our system. A few of those options are as follows:
+
+- Recipes can ditch item history and produce something with no history
+- Recipes can output entirely different items based on certain criteria (material levels, player levels, components used, etc.)
+- Recipes can have a chance of failure and output a "failure item"
+- Recipes can output variable quantities of items based on certain factors
+- In addition to stats, component effects can alter the item name, multiple aspects of its appearance, requirements, etc.
+
+The design work utilizing our crafting system was largely handled independently by one of our designers with occasional improvements provided by myself as needed.
 
 ### Quest System
 Designed and built out quest system and associated UI, integrating inky for writer-provided dialogue, allowing branching, NPC knowledge flags, alternate starts, multiple endings, a variety of possible rewards, a ridiculous number of possible objective types, and not once has a quest bug resulted in lost player progression or reward (83 quests and counting).
