@@ -178,7 +178,7 @@ In addition to the quest system, we added a system for bite-sized quests that ar
 
 The tasks assigned by bulletin boards are somewhat random. Tasks are chosen based on character level, whether they've been done before in this session, what category they chose, and in some cases, their class or profession.
 
-Also, the envelopes/cards design was my idea. :grinning :
+Also, the envelopes/cards design was my idea. :grinning:
 
 {{< figure src="/images/ea-bulletin-board.png" alt="A screenshot of a horizontally narrow window showing three cards, the first of which is revealed and shows details about a simple task. The other two are envelopes with wax seals." caption="Bulletin Board Window" >}}
 
