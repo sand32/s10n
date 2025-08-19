@@ -1,1 +1,1 @@
-_Note: This site is a work in progress. More project write-ups and presentation consideration is underway._
+_Note: This site is a work in progress. More project write-ups and presentation considerations are underway._
