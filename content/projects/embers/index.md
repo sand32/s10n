@@ -23,7 +23,9 @@ Among myself and our CTO, our working relationship naturally fell into a feature
 
 ### Social Features
 #### Back-End
-When I joined the project, there were only rudimentary social features implemented. The game had an external Python service that handled chat and rudimentary group management. I was tasked with fleshing this out and given my past experience with back-end service development in C#, we decided to build a new service from the ground up for our social features. Given the fact that we already had players engaging with the game, I was also directed to not disrupt the existing JSON-over-TCP protocol the project already had established.
+When I joined the project, there were only rudimentary social features implemented. The game had an external Python service that handled chat and rudimentary group management. I was tasked with fleshing this out and given my past experience with back-end service development in C#, we decided to build a new service from the ground up for our social features. Given the fact that we already had players engaging with the game, I was also directed to not disrupt the existing JSON-over-TCP protocol the project already had established. 
+
+{{< alert "circle-info" >}}This is only the protocol used for communication between the game client and the social service, the game client and zone servers communicate via a bespoke binary protocol using the enet library for reliable UDP communication.{{< /alert >}}
 
 What has followed is now a reliable social service handling server-side logic for the following:
 
