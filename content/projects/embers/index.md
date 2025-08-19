@@ -8,8 +8,6 @@ tags: ['Game Development', 'Full-Time', 'Project', 'Unity', 'C#']
 
 {{< lead >}}[{{< icon "globe" >}}](https://embersadrift.com) [{{< icon "steam" >}}](https://store.steampowered.com/app/3336530/Embers_Adrift/){{< /lead >}}
 
-_Note: This article is currently being written and will expand and/or change substantially over the coming days._
-
 ### Brief History
 I joined the Stormhaven team in May 2020. This is a project that had started as a passion project by a small group of Everquest fans, had already gone through several personnel shifts through its history, and by the time I joined the project had made some significant progress and had received the funding required to expand the team.
 
@@ -103,11 +101,11 @@ The front-end for all our social features resides entirely within our Unity game
 
 The primary UI that exposes social features is our Social Window, pictured below. This window is divided into two panes: the left pane focuses entirely on the {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}} feature. The right-hand pane contains relationship management features. This UI was an exercise in creating a very dense UI full of many interactive features. The design was driven by myself with input from other team members. It's not a pretty UI, but it's functional and our users manage to utilize it effectively.
 
-![A screenshot of the in-game social window as described above. The friends tab is selected and is showing a list of offline friends.](/images/ea-social-window.png)
+{{< figure src="/images/ea-social-window.png" alt="A screenshot of the in-game social window as described above. The friends tab is selected and is showing a list of offline friends." caption="Social Window" >}}
 
-A relatively late feature, the postal system allows players to send messages to each other whether or not the recipient is online. These messages may also send money or items (postage increases based on the items sent). If sending items, the sender also has the option to demand cash on delivery, requiring the recipient to pay a fee before the items are released to them (this fee is sent via another message back to the sender). This postal system was later used to deliver items and cash for our auction house feature (in which I was not involved). Below is the message composition UI for said system.
+A relatively late feature, the postal system allows players to send messages to each other whether or not the recipient is online. These messages may also send money or items (postage increases based on the items sent). If sending items, the sender also has the option to demand cash on delivery, requiring the recipient to pay a fee before the items are released to them (this fee is sent via another message back to the sender). This postal system was later used to deliver items and cash for our auction house feature (in which I was not involved).
 
-![A screenshot of the in-game mailbox. The window provides typical fields for entering mail message data: a recipient name, a subject line, and a message. This is followed by an attachments section into which players can drag items and with which they can set a monetary amount to either send or demand as Cash On Delivery. At the bottom is a postage cost, their available funds, and Clear and Send buttons.](/images/ea-mailbox-window.png)
+{{< figure src="/images/ea-mailbox-window.png" alt="A screenshot of the in-game mailbox. The window provides typical fields for entering mail message data: a recipient name, a subject line, and a message. This is followed by an attachments section into which players can drag items and with which they can set a monetary amount to either send or demand as Cash On Delivery. At the bottom is a postage cost, their available funds, and Clear and Send buttons." caption="Mailbox Window" >}}
 
 The chat windowing system has been an interesting challenge. In a game like ours, chat is a core feature with many ergonomic expectations our users bring to the table from other similar games. One aspect of the UI that has been interesting to tackle has been: based on any number of situations, which chat window/tab should be activated when the user hits the enter key? This has gone through multiple evolutions over the course of our project, but we've landed on the following steps (as of this writing, yet to be released):
 
@@ -120,7 +118,7 @@ The chat windowing system has been an interesting challenge. In a game like ours
 
 The chat windows are probably the most configurable UI elements. Every player has their own desired configuration and number of windows that must be restored every session. Chat tabs can be dragged between windows, re-ordered in their current window, or dragged out to create a new window. If the last tab in a window is closed or dragged to another window, that window is closed (unless it's the last window). As you might imagine, this requires fairly particular saving of window state.
 
-![An animated gif of the in-game chat windowing system demonstrating how chat tabs can be dragged out into their own windows or recombined into a single window.](/images/ea-tab-dragging.gif)
+{{< figure src="/images/ea-tab-dragging.gif" alt="An animated gif of the in-game chat windowing system demonstrating how chat tabs can be dragged out into their own windows or recombined into a single window." caption="An example of chat tab dragging" >}}
 
 ### Crafting System
 Our crafting system is perhaps a bit overly complex. I was handed a design from early on in the project. It was very ambitious, ultimately a bit too ambitious for the amount of design implementation we were capable of taking on. Nevertheless, the system I built carries out that design intent and over time we've been able to utilize some aspects of the system.
@@ -128,7 +126,7 @@ Our crafting system is perhaps a bit overly complex. I was handed a design from 
 #### Flexible Recipes
 Every recipe in this system requires the fulfillment of one or more components. Each component can be fulfilled by one or more possible materials. For example, a sword recipe might have blade and hilt components. The blade component might allow one of any number of possible metals. The chosen material usually affects the stats of the resulting item in some way a designer defines via our tooling. After we implemented this, I noticed that World of Warcraft brought in a similar feature, so we must've been on to something with this.
 
-![A screenshot of the in-game crafting window used in this system. Left side is a recipe list with a \"Light Cooked Meat\" recipe selected, right side shows a detail pane containing the name and level of the recipe, a components selection area, an item preview, and buttons to activate the crafting process.](/images/ea-crafting-window.png)
+{{< figure src="/images/ea-crafting-window.png" alt="A screenshot of the in-game crafting window used in this system. Left side is a recipe list with a \"Light Cooked Meat\" recipe selected, right side shows a detail pane containing the name and level of the recipe, a components selection area, an item preview, and buttons to activate the crafting process." caption="Crafting Window" >}}
 
 #### Multi-Step Crafting
 While we only make limited use of this, one of the original pillars of the system was that if a crafted item is used in a later recipe to create yet another item, the original item's materials can affect the end item's stats. Essentially, any materials used in the entire history of an item's crafting history can affect its current states. To do this, every item instance carries a tree of IDs to track its crafting history such that we can reconstruct the item when it enters gameplay scope.
@@ -151,12 +149,41 @@ Between the recipes, the items, and the `ComponentEffects`, there are a ridiculo
 The design work utilizing our crafting system was largely handled independently by one of our designers with occasional improvements provided by myself as needed.
 
 ### Quest System
-Designed and built out quest system and associated UI, integrating inky for writer-provided dialogue, allowing branching, NPC knowledge flags, alternate starts, multiple endings, a variety of possible rewards, a ridiculous number of possible objective types, and not once has a quest bug resulted in lost player progression or reward (83 quests and counting).
+The quest system we built was likewise ambitious, but I feel we've made good use of it. This system utilizes [ink](https://www.inklestudios.com/ink/)-driven dialogue scripts, albeit with heavy custom instrumentation. Our quests can freely branch and converge, can have multiple starts and/or multiple endings. They can have a multiple requirements to start, including requiring the completion of other quests. Over time we've expanded the number of types of quest objectives the player may complete some of which have quite the range of parameters.
 
-![Quest Log](/images/ea-quest-window.png)
+{{< figure src="/images/ea-quest-window.png" alt="A screenshot of the in-game quest log. Left side is a list of quests with expandable sections titled \"Active\" and \"Completed\". Right side shows detail for the selected quest showing the quest title, a description of the current quest step, and a list of four current objectives, three of which are marked as complete. " caption="Quest Log" >}}
+
+#### Data and Tooling
+Authoring a quest starts with the writers. They will write dialogue for each part of a quest in one or more ink files, utilizing a light amount of logic to react to certain aspects of game state. Once written, the ink files are passed to me to implement in-editor (we don't bother forcing our writers to learn how to use Unity, or git for that matter). In Unity, I use a custom graph editor UI to outline the various quest steps and how a player can progress from one to the other. I construct quest objective objects and populate them and the quest data with any specifics not defined in the ink files, including when to pull what dialogue from said ink files.
+
+```
+===BETTY_INPROGRESS
+=DIALOGUE
+What's on your mind?
+*{not HAS_LOOT("HIDES")} Where did you say I could find the Chunks of Rat Fur you're looking for?
+    I've heard they can be found just outside the wall in Northreach. They're also known to infest ruins all around the region.
+    ->DONE
+*{HAS_LOOT("HIDES")} I've gathered half a dozen Chunks of Rat Fur. Will these do?
+    Oh yes! These will do just fine. Thank you for gathering them. Now, let's see about getting you something for your troubles. #OBJECTIVE=HIDES #RESTART
+    ->DONE
+```
+
+{{< figure src="/images/ea-quest-graph.png" alt="A screenshot of a UI in the Unity editor showing a node-graph with branching relationships flowing from left to right." caption="An in-editor quest graph showing a quest with multiple starts and multiple endings." >}}
+
+#### Design Concerns
+Our quest system is certainly more advanced than most games in the genre. Whether or not that's a good thing is still an open question in my mind. One directive I was given early on from the rest of the team was that we wanted a branching quest system. In hindsight, such a system may be better suited to single-player RPGs than multiplayer RPGs like ours. While I'm proud of what we've built, I wonder whether a system that forces players to live with their choices might be in conflict with how most players play MMOs. Most players in an MMO value hyper-optimization of their characters, likely driven by wanting to perform at their best when working with other players. If they feel that a branching quest has locked them out of getting a specific item they perceive as critical to their character build, they would understandably be upset. We've done our best to ensure that quests with different endings have equivalent rewards, but this may not be enough in this regard.
+
+### Bulletin Boards
+In addition to the quest system, we added a system for bite-sized quests that are purely solo-able and offer a small bit of experience. This system utilizes much of the same logic as quests, particularly the quest objectives, but they are both collected and turned in at bulletin boards, not through character dialogue like quests usually are.
+
+The tasks assigned by bulletin boards are somewhat random. Tasks are chosen based on character level, whether they've been done before in this session, what category they chose, and in some cases, their class or profession.
+
+Also, the envelopes/cards design was my idea. :grinning :
+
+{{< figure src="/images/ea-bulletin-board.png" alt="A screenshot of a horizontally narrow window showing three cards, the first of which is revealed and shows details about a simple task. The other two are envelopes with wax seals." caption="Bulletin Board Window" >}}
 
 ### Other
 - Monitored logging and player reports to find and address problems as they arose, including multiple investigations to determine whether certain events were caused by logic errors or player behavior
-- Worked extensively with multiple writers to bring their work into the game and implement it as quests within the aforementioned quest system, providing assistance and taking feedback for improvements
-- Built a bulletin board system to offer bite-sized quests (re-using much of the logic from the main quest system, but with significantly different player interactions)
-- Other contributions include the keyboard/mouse rebinding system, the tutorial system, the notification system, and a variety of other stuff that just sort of happens over the years
+- Keyboard/Mouse rebinding system: pretty standard fare allowing free rebinding including key combinations
+- Tutorials: early on in the game, when players take certain actions or reach certain checkpoints, tutorial popups will appear to help explain certain systems (these tutorials can all be reviewed in the tutorial log)
+- Notifications: Alerts players to mail or invites with a notification toast on the right-hand side of their screen, missed notifications appear in a window they can open (which is highlighted when it contains notifications)
