@@ -172,7 +172,7 @@ What's on your mind?
 
 {{< figure src="/images/ea-quest-graph.png" alt="A screenshot of a UI in the Unity editor showing a node-graph with branching relationships flowing from left to right." caption="An in-editor quest graph showing a quest with multiple starts and multiple endings." >}}
 
-#### Design Concerns
+#### Design Observations
 Our quest system is certainly more advanced than most games in the genre. Whether or not that's a good thing is still an open question in my mind. One directive I was given early on from the rest of the team was that we wanted a branching quest system. In hindsight, such a system may be better suited to single-player RPGs than multiplayer RPGs like ours. While I'm proud of what we've built, I wonder whether a system that forces players to live with their choices might be in conflict with how most players play MMOs. Most players in an MMO value hyper-optimization of their characters, likely driven by wanting to perform at their best when working with other players. If they feel that a branching quest has locked them out of getting a specific item they perceive as critical to their character build, they would understandably be upset. We've done our best to ensure that quests with different endings have equivalent rewards, but this may not be enough in this regard.
 
 ### Bulletin Boards
