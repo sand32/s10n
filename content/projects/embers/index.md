@@ -189,3 +189,7 @@ Also, the envelopes/cards design was my idea. :grinning:
 - Keyboard/Mouse rebinding system: pretty standard fare allowing free rebinding including key combinations
 - Tutorials: early on in the game, when players take certain actions or reach certain checkpoints, tutorial popups will appear to help explain certain systems (these tutorials can all be reviewed in the tutorial log)
 - Notifications: Alerts players to mail or invites with a notification toast on the right-hand side of their screen, missed notifications appear in a window they can open (which is highlighted when it contains notifications)
+
+{{< youtube "d_XgmiqmVSU" >}}
+&nbsp;
+{{< youtube "PpQkbXCGR4E" >}}
