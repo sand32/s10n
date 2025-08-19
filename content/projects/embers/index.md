@@ -4,7 +4,7 @@ title: 'Embers Adrift'
 description: 'An indie MMO made in Unity, released in 2022'
 tags: ['Game Development', 'Full-Time', 'Project', 'Unity', 'C#']
 ---
-<!-- <iframe src="https://store.steampowered.com/widget/3336530/" frameborder="0" width="646" height="190"></iframe> -->
+<iframe src="https://store.steampowered.com/widget/3336530/" frameborder="0" width="646" height="190"></iframe>
 
 {{< lead >}}[{{< icon "globe" >}}](https://embersadrift.com) [{{< icon "steam" >}}](https://store.steampowered.com/app/3336530/Embers_Adrift/){{< /lead >}}
 
