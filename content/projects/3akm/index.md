@@ -8,7 +8,7 @@ tags: ['Web Site', 'Spare-Time', 'Project', 'Javascript']
 {{< github repo="sand32/3akm-next" showThumbnail=false >}}
 
 ### Rationale
-The {{< tooltip text="An acronym comprised of the last initials of the LAN's hosts." >}}3AKM{{< /tooltip >}}&nbsp;{{< tooltip text="Local Area Network Party: An event where folks bring their computers to a location, connect them all to a network, and play computer games." >}}LAN party{{< /tooltip >}}&nbsp;is an annual LAN party hosted by myself, my brothers and some friends. Around 2014, I decided to set up a site for our LAN. This site would provide information about the upcoming LAN, accept RSVPs for the upcoming LAN (and show a list of who has RSVPed), and provide an admin interface for the hosts which would, among other things, allow the hosts to send requests to certain game servers during the LAN.
+The {{< tooltip text="An acronym comprised of the initials of the LAN's hosts." >}}3AKM{{< /tooltip >}}&nbsp;{{< tooltip text="Local Area Network Party: An event where folks bring their computers to a location, connect them all to a network, and play computer games." >}}LAN party{{< /tooltip >}}&nbsp;is an annual LAN party hosted by myself, my brothers and some friends. Around 2014, I decided to set up a site for our LAN. This site would provide information about the upcoming LAN, accept RSVPs for the upcoming LAN (and show a list of who has RSVPed), and provide an admin interface for the hosts which would, among other things, allow the hosts to send requests to certain game servers during the LAN.
 
 We've been between infrastructures in recent years, so the site is currently unavailable. Chances are high that when the site does resurface, it will have a new implementation.
 
@@ -27,4 +27,7 @@ MongoDB is used for the backing database. Originally, users were managed entirel
 
 One aspect I'm proud of with this site is the minimal tooling required to run it. This pre-dated a lot of tooling complexity in the era of Webpack, etc. and relied on a minimal number of npm packages. After setting up its database and other optional dependencies (any of which could be enabled in configuration), running the actual site consisted only of pulling npm dependencies and running the node process.
 
-{{< figure src="images/3akm_10th.jpg" alt="A poster for the 10th Annual 3AKM LAN (then referred to as 3AK)" caption="10th Annual LAN Poster" >}}
+### Support and Evolution
+This site was active for about five years, evolving and growing with the needs of the event. It has gradually evolved to provide more useful tools and features for the event hosts, including: tournament management, invite recipient lists, new admin tooling for external services, etc. While some of the needs for this site have diminished over the years (e.g. games not providing dedicated servers anymore), we fully intend to bring this site back in some form in the future, perhaps with an even more expanded purview.
+
+{{< figure src="images/3akm_10th.jpg" alt="A poster for the 10th Annual 3AKM LAN (then referred to as 3AK)" caption="10th Annual LAN Poster, designed by <a href=\"https://michaelcawcutt.com\" target=\"_blank\">Michael Cawcutt</a>" >}}
