@@ -47,7 +47,7 @@ body {
 
 .tooltip {
     cursor: default;
-    text-decoration: underline wavy;
+    text-decoration: underline dotted;
 }
 
 @media(max-width:600px) {
