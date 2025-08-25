@@ -5,7 +5,7 @@ description: A website for a local LAN party
 tags: ['Web Site', 'Spare-Time', 'Project', 'Javascript']
 ---
 
-{{< github repo="sand32/3akm-next" >}}
+{{< github repo="sand32/3akm-next" showThumbnail=false >}}
 
 ### Rationale
 The {{< tooltip text="An acronym comprised of the last initials of the LAN's hosts." >}}3AKM{{< /tooltip >}}&nbsp;{{< tooltip text="Local Area Network Party: An event where folks bring their computers to a location, connect them all to a network, and play computer games." >}}LAN party{{< /tooltip >}}&nbsp;is an annual LAN party hosted by myself, my brothers and some friends. Around 2014, I decided to set up a site for our LAN. This site would provide information about the upcoming LAN, accept RSVPs for the upcoming LAN (and show a list of who has RSVPed), and provide an admin interface for the hosts which would, among other things, allow the hosts to send requests to certain game servers during the LAN.
