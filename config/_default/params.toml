@@ -10,7 +10,7 @@ defaultAppearance = "dark" # valid options: light or dark
 autoSwitchAppearance = true
 
 enableA11y = true
-enableSearch = true
+enableSearch = false
 enableCodeCopy = false
 
 replyByEmail = false
@@ -145,8 +145,8 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   # domain = "llama.yoursite.com"
 
 [umamiAnalytics]
-  # websiteid = "ABC12345"
-  # domain = "llama.yoursite.com"
+  websiteid = "4b0c4584-f298-4c22-a54d-cea9152cb3be"
+  # domain = "about.s10n.onl"
   # dataDomains = "yoursite.com,yoursite2.com"
   # scriptName = ""
   # enableTrackEvent = true
