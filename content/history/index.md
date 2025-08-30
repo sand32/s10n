@@ -6,6 +6,10 @@ cascade:
   showDate: false
   showAuthor: false
 ---
+
+<a href="/Seth Anderson - Resume (General 2025).pdf" target="_blank">{{< icon "pdf" >}} Resume - General</a><br />
+<a href="/Seth Anderson - Resume (Games 2025).pdf" target="_blank">{{< icon "pdf" >}} Resume - Games</a>
+
 ## Game Programmer - Stormhaven Studios
 **{{< icon "calendar" >}} May 2020 to Present**
 
