@@ -33,7 +33,7 @@ What has followed is now a reliable social service handling server-side logic fo
 - Groups, including leader management and seamless restoration in the event of service or connection failure
 - Guilds, including ranks, rank-based permissions, general and officer chat, {{< tooltip text="Guild Master: the top-most rank in any guild which holds absolute power over the structure of the guild." >}}GM{{< /tooltip >}}&nbsp;transfer, etc.
 - Raids (comprised of multiple normal groups)
-- {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}}, allowing players to find and join group or find new group members based on desired activities and roles
+- {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}}, allowing players to find and join groups or find new group members based on desired activities and roles
 - Friends and Block lists, allowing players to manage 1-to-1 relationships in-game
 - Mail, including both the in-game postal service as well as invites for the aforementioned features
 - Cross-Zone player status, being the only non-zone-specific back-end we have, the social service also propagates player status changes including social status (Online/Away/Do Not Disturb), role/specialization, level, location, etc.
@@ -99,7 +99,7 @@ public interface IPingHandler
 While the service was built as an ASP.NET Core app in anticipation of also exposing HTTP endpoints, this has only been utilized very recently for some internal communication.
 
 #### Front-End
-The front-end for all our social features resides entirely within our Unity game client. I've build a number of UIs for this game including multiple in relation to our social features. In keeping with the codebase as built by our CTO, our social features are coordinated within our game client by a singleton class: the `SocialManager`. All UIs for our social features react to events exposed by this singleton and call back into it to realize user intent. In pattern-brain lingo, this would be called the view-model.
+The front-end for all our social features resides entirely within our Unity game client. I've built a number of UIs for this game including multiple in relation to our social features. In keeping with the codebase as built by our CTO, our social features are coordinated within our game client by a singleton class: the `SocialManager`. All UIs for our social features react to events exposed by this singleton and call back into it to realize user intent. In pattern-brain lingo, this would be called the view-model.
 
 The primary UI that exposes social features is our Social Window, pictured below. This window is divided into two panes: the left pane focuses entirely on the {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}}&nbsp;feature. The right-hand pane contains relationship management features. This UI was an exercise in creating a very dense UI full of many interactive features. The design was driven by myself with input from other team members. It's not a pretty UI, but it's functional and our users manage to utilize it effectively.
 
