@@ -115,8 +115,8 @@ The chat windowing system has been an interesting challenge. In a game like ours
 1. Use the first found active chat tab
 1. Use the most recently used chat tab, even if inactive
 1. Use the first found inactive chat tab
-1. Use the a new chat tab in the most recently active window
-1. Use the a new chat tab in the first found window
+1. Open a new chat tab in the most recently active window
+1. Open a new chat tab in the first found window
 
 The chat windows are probably the most configurable UI elements. Every player has their own desired configuration and number of windows that must be restored every session. Chat tabs can be dragged between windows, re-ordered in their current window, or dragged out to create a new window. If the last tab in a window is closed or dragged to another window, that window is closed (unless it's the last window). As you might imagine, this requires fairly particular saving of window state.
 
