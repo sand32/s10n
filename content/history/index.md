@@ -20,8 +20,7 @@ My work at Stormhaven involved gameplay programming including systems, UI, {{< t
 - Responsible for our social service&mdash;which handles chat, groups, raids, {{< tooltip text="Looking For Group / Looking For More: a common abbreviation in genre parlance for the process of formulating a group" >}}LFG/LFM{{< /tooltip >}}, friends, guilds, block lists, invites, mail, and cross-zone player status&mdash;as well as all the associated UIs. This service was implemented in C# using modern .NET, hosted on a Linux machine within a Docker container and utilizing the TPL to perform most action asynchronously.
 - Monitored logging and player reports to find and address problems as they arose, including multiple investigations to determine whether certain events were caused by logic errors or player behavior
 - Designed and built out quest system and associated UI, integrating inky for writer-provided dialogue, allowing branching, NPC knowledge flags, alternate starts, multiple endings, a variety of possible rewards, a ridiculous number of possible objective types, and not once has a quest bug resulted in lost player progression or reward (83 quests and counting).
-- Worked extensively 
-layout = 'simple'with multiple writers to bring their work into the game and implement it as quests within the aforementioned quest system, providing assistance and taking feedback for improvements
+- Worked extensively with multiple writers to bring their work into the game and implement it as quests within the aforementioned quest system, providing assistance and taking feedback for improvements
 - Built a bulletin board system to offer bite-sized quests (re-using much of the logic from the main quest system, but with significantly different player interactions)
 - Other contributions include the keyboard/mouse rebinding system, the tutorial system, the notification system, and a variety of other stuff that just sort of happens over the years
 
@@ -50,8 +49,7 @@ advertise their products and provides valuable insight into market trends for th
 At Novus, I helped the team evaluate and migrate to new front-end and infrastructure tools.
 - Provided insight into the benefits and drawbacks of the various options available to the team as they move into modern development practices
 - After identifying the team’s desired path, helped the team to achieve that vision utilizing tools such as Azure, Kubernetes, .NET Core, and various other technologies
-- Implemented a new d
-layout = 'simple'eployment process for projects based on these new technologies utilizing the team’s existing toolchain (Azure DevOps, Octopus Deploy)
+- Implemented a new deployment process for projects based on these new technologies utilizing the team’s existing toolchain (Azure DevOps, Octopus Deploy)
 - Helped bring the team up to speed on new tools such as Docker, Minikube, Helm, etc.
 - Helped outline the plan for how to establish a microservice architecture which fit their needs
 - Created exploratory applications in Angular and React to help the team decide what solution to move forward with for front-end development
@@ -71,7 +69,6 @@ At Lift Brands, I provided technical guidance for leads and junior developers al
 - Led the effort to simplify configuration and logging practices by properly utilizing stdin/stdout and environment variables thereby placing more power in the hands of our operations team
 - Aided in the integration of the ELK stack into our architecture for logging purposes
 - Laid the foundation for transitioning our database migration practices to a code-first paradigm using EF Core while allowing for future polyglot persistence
-layout = 'simple'
 - Worked closely with our Chief Architect to resolve cross-cutting concerns for a microservice-based architecture, including: authentication/authorization, log correlation/aggregation, and microservice delineation/communication/persistence
 - Acted as a central point of contact for the rest of our team with regard to microservice design and standardization
 - Aided our operations team in their efforts to pursue a container-based architecture
@@ -81,8 +78,7 @@ layout = 'simple'
 
 Zags is an insurance software company focused on providing solutions for insurance agencies encompassing all
 policy, claims, and billing needs.
-- Quickly picked up and became productive with our third-party document printing utility whic
-layout = 'simple'h involved becoming familiar with specialized tools and a domain-specific scripting language
+- Quickly picked up and became productive with our third-party document printing utility which involved becoming familiar with specialized tools and a domain-specific scripting language
 - Participated in design discussions regarding our printing system to improve the maintainability of document definitions and improving performance
 - Implemented UI improvements in ASP.NET MVC and Razor
 - Provided formalized UI and UX feedback (in lieu of professional designers) for our application which was particularly challenged in those areas
@@ -106,8 +102,7 @@ Front-end web developer on a leading eCommerce platform
 
 ### Contract 1
 Key web UI developer on a large-scale call center application sold by a Fortune 500 company
-- Worked closely with
-layout = 'simple' nine other Saturn developers as well as client-company developers on other teams to design and implement new product features
+- Worked closely with nine other Saturn developers as well as client-company developers on other teams to design and implement new product features
 - Implemented UI functionality in Javascript using jQuery and Bootstrap
 - Wrote automated functional tests in Java using Selenium
 - Created and modified bash and Powershell scripts to automate development tasks (setting up environments, managing remote processes)
